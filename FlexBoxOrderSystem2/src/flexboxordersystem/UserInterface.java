@@ -6,7 +6,6 @@
 package flexboxordersystem;
 
 /**
- *
  * @author up777815, up831038, up877101, up867692
  */
 
@@ -19,17 +18,12 @@ import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.JOptionPane;
 import javax.swing.JRadioButton;
-import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 
 public class UserInterface extends JFrame
 {
-    private final JLabel /*bannerImage, specifyRequirements, boxDimensionsText, 
-                         heightWidthLengthText, seperatorHWL1, seperatorHWL2, 
-                         cardboardGradeText, colourPrintingText, 
-                         reinforcementText, sealableTopText, quantityText, */
-                         currTotalCost;
+    private final JLabel currTotalCost;
     private String[] cardboardGrades = {"1", "2", "3", "4", "5"};
     private final JTextField heightInp, widthInp, lengthInp, 
                              quantityInp;
@@ -45,14 +39,14 @@ public class UserInterface extends JFrame
     /*private final ButtonGroup colourPrintingGroup;*/
     private final JCheckBox bottomReinforcement, cornerReinforcement, 
                             sealableTop;
-    private final JButton addItemButton;
     
     //temp stores for variables used in creation of classes
     private int heightTemp, widthTemp, lengthTemp, quantityTemp, gradeTemp, 
                 colourTemp;
     private boolean bottomTemp, cornerTemp, sealableTemp = false;
     private final ArrayList<CardboardBox> objArr;
-    
+    private final ArrayList<JTextField> textFields = new ArrayList<>();
+
     
     
     // Variables declaration - do not modify                     
@@ -103,8 +97,6 @@ public class UserInterface extends JFrame
         bottomReinforcement = new javax.swing.JCheckBox();
         cornerReinforcement = new javax.swing.JCheckBox();
         jLabel9 = new javax.swing.JLabel();
-//        jRadioButtonYes = new javax.swing.JRadioButton();
-//        jRadioButtonNo = new javax.swing.JRadioButton();
         jLabel10 = new javax.swing.JLabel();
         quantityInp = new javax.swing.JTextField();
         jButtonAdd = new javax.swing.JButton();
@@ -112,7 +104,6 @@ public class UserInterface extends JFrame
         jButtonSubmit = new javax.swing.JButton();
         jButtonExit = new javax.swing.JButton();
         sealableTop = new javax.swing.JCheckBox();
-        addItemButton = new javax.swing.JButton();
         currTotalCost = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -164,13 +155,11 @@ public class UserInterface extends JFrame
         jButtonExit.setText("Exit");
 
         sealableTop.setText("Sealable Top");
-
-        addItemButton.setText("Add item to order");
-        
         
         //Shorthand for adding an action listener to the buttons
-        addItemButton.addActionListener(this::buttonHandler);
-        
+        jButtonAdd.addActionListener(this::addToOrder);
+        jButtonExit.addActionListener(this::closeWindow);
+        jButtonReset.addActionListener(this::resetOrder);
         /*  Add a lsitener to the grade combobox so that when a grade is selected,
             Only valid options for the other inputs are avaialble */
         gradeInp.addActionListener(this::gradeSelected);
@@ -178,44 +167,10 @@ public class UserInterface extends JFrame
        
         
         //Focus listeners added to text inputs - clears input when focussed
+        initilaiseItemsForFOucsListeners();
 
-        quantityInp.addFocusListener(new java.awt.event.FocusListener() {
-            @Override
-            public void focusGained(java.awt.event.FocusEvent evt) {
-                clearText(evt);
-            }
-            @Override
-            public void focusLost(FocusEvent e) {
-            }
-        });
-        heightInp.addFocusListener(new java.awt.event.FocusListener() {
-            @Override
-            public void focusGained(java.awt.event.FocusEvent evt) {
-                clearText(evt);
-            }
-            @Override
-            public void focusLost(FocusEvent e) {
-            }
-        });
-        widthInp.addFocusListener(new java.awt.event.FocusListener() {
-            @Override
-            public void focusGained(java.awt.event.FocusEvent evt) {
-                clearText(evt);
-            }
-            @Override
-            public void focusLost(FocusEvent e) {
-            }
-        });
-        lengthInp.addFocusListener(new java.awt.event.FocusListener() {
-            @Override
-            public void focusGained(java.awt.event.FocusEvent evt) {
-                clearText(evt);
-            }
-            @Override
-            public void focusLost(FocusEvent e) {
-            }
-        });
-        
+        textFields.forEach((item) -> addFocusListener(item));
+
         //Listeners to make sure Only one of these items is checked at a time
         noColourButton.addActionListener(this::colourSelected);
         oneColourButton.addActionListener(this::colourSelected);
@@ -277,7 +232,7 @@ public class UserInterface extends JFrame
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                         .addComponent(quantityInp, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addGap(29, 29, 29)
-                                        .addComponent(addItemButton))
+                                        )
                                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
                                         .addGap(127, 127, 127)
                                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -340,7 +295,7 @@ public class UserInterface extends JFrame
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel10)
                     .addComponent(quantityInp, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(addItemButton))
+                    )
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(currTotalCost)
                 .addGap(8, 8, 8)
@@ -382,8 +337,7 @@ public class UserInterface extends JFrame
         }else{
             noColourButton.setSelected(false);
             oneColourButton.setSelected(false);
-        }
-        
+        } 
     }
     
     //Determines waht options the suer has based on grade of cardboard
@@ -422,9 +376,11 @@ public class UserInterface extends JFrame
             case 4: //grade 5
                 bottomReinforcement.setEnabled(true);
                 cornerReinforcement.setEnabled(true);
-                oneColourButton.setEnabled(true);
+                oneColourButton.setEnabled(false);
                 twoColourButton.setEnabled(true);
-                noColourButton.setSelected(true);
+                twoColourButton.setSelected(true);
+                noColourButton.setEnabled(false);
+                noColourButton.setSelected(false);
                 break;
             default:
                 bottomReinforcement.setEnabled(false);
@@ -441,12 +397,22 @@ public class UserInterface extends JFrame
         textField.setText("");
         
     }
-    private void buttonHandler(java.awt.event.ActionEvent event) {                               
+    
+    private void closeWindow(java.awt.event.ActionEvent e){
+        System.exit(0);
+    }
+    
+    private void resetOrder(java.awt.event.ActionEvent e){
+        objArr.clear();
+        totalCostStringUpdate();
+        textFields.forEach((item) -> item.setText("          "));
+    }
+    
+    private void addToOrder(java.awt.event.ActionEvent event) {                               
         // TODO add your handling code here:
         String[] testValues = {heightInp.getText(), widthInp.getText(), lengthInp.getText(), quantityInp.getText()};
         
-    
-        if(event.getSource() == addItemButton)
+        if(event.getSource() == jButtonAdd)
             {
                 int loopInt = 0;
                 try
@@ -478,13 +444,13 @@ public class UserInterface extends JFrame
                     JOptionPane.showMessageDialog(null, errorString);
                 }
                 
-                if(Integer.parseInt(quantityInp.getText()) >= 50 && Integer.parseInt(quantityInp.getText())<= 5000)
+                if(Integer.parseInt(quantityInp.getText()) >= 1 && Integer.parseInt(quantityInp.getText())<= 5000)
                 {
                     quantityTemp = Integer.parseInt(quantityInp.getText());
                 }
                 else
                 {
-                    JOptionPane.showMessageDialog(null, "Minimum orders are of 50 boxes, maximum of 5000.");
+                    JOptionPane.showMessageDialog(null, "Minimum orders are of 1 box, maximum of 5000.");
                 }
                 loopInt = 0;
                 do{
@@ -593,12 +559,8 @@ public class UserInterface extends JFrame
                         JOptionPane.showMessageDialog(null, "Flexbox does not produce a box to these specifications");
                         break;
                 }
-                    
             }
-        
     }                              
-
-    
     
     //add methods for doing stuff
     public int getValidType(int cardboardGradeInp, int colourPrintInp, 
@@ -688,6 +650,32 @@ public class UserInterface extends JFrame
     
     public void totalCostStringUpdate()
     {
-        currTotalCost.setText("Current total cost: £" + df.format(getTotalCost(objArr)));
+            double test = getTotalCost(objArr);
+            if (test == 0.0){
+                currTotalCost.setText("Current total cost: £0.00");
+            }else{
+                currTotalCost.setText("Current total cost: £" + df.format(getTotalCost(objArr)));
+            }
+        
     }
+    
+    private void initilaiseItemsForFOucsListeners(){
+        textFields.add(quantityInp);
+        textFields.add(heightInp);
+        textFields.add(widthInp);
+        textFields.add(lengthInp);
+    }
+    
+    private void addFocusListener(JTextField item){
+        item.addFocusListener(new java.awt.event.FocusListener() {
+            @Override
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                clearText(evt);
+            }
+            @Override
+            public void focusLost(FocusEvent e) {
+            }
+        });
+    }
+    
 }
