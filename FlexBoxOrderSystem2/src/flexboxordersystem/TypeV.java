@@ -11,7 +11,9 @@ package flexboxordersystem;
  */
 public class TypeV extends CardboardBox
 {
-    // constructor - default
+    /**
+     * Default constructor used for instantiation - takes no arguments,
+     */
     public TypeV()
     {
         

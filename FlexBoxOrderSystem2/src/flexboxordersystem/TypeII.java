@@ -11,13 +11,26 @@ package flexboxordersystem;
  */
 public class TypeII extends CardboardBox
 {
-    // constructor - default
+    /**
+     * Default constructor used for instantiation - takes no arguments,
+     */
     public TypeII()
     {
         
     }
     
-    // constructor including initialisation of instance variables
+    /**
+     * Constructor for a box of type II as determined by the UI Class
+     * @param heightIn the height of the box to be created
+     * @param widthIn   the width of the box to be created
+     * @param lengthIn  the length of the box to be created
+     * @param quantityIn the quantity of boxes ordered
+     * @param cardboardGradeIn the grade of cardboard for the box
+     * @param colourPrintIn the colour printing value for the box
+     * @param reinforcedBottomIn value for the reinforced bottom variable of the box
+     * @param sealableTopIn value for whether or not the boxes can be sealed
+     * @param reinforcedCornersIn value for the reinforced corners variable for the box
+     */    
     public TypeII(int heightIn, int widthIn, int lengthIn, int quantityIn, 
                         int cardboardGradeIn, int colourPrintIn, 
                         boolean reinforcedBottomIn, boolean reinforcedCornersIn, 
@@ -39,9 +52,17 @@ public class TypeII extends CardboardBox
                         sealableTop);
     }
     
-    // calculates and returns cost based on params
-    // ** note that currCost is initialised with 0 as if the switch statement
-    // doesnt execute properly then currCost will not be given a value **
+    /**
+     * Method inherited from super class for calculating the cost of the box
+     * @param quantity quantity of boxes ordered    
+     * @param baseCost calculated value using the surface area of the box and a multiplier provided by manufacturer
+     * @param colourPrint the colour print value of the box    
+     * @param reinforcedBottom reinforced bottom value for the box    
+     * @param reinforcedCorners reinforced corner value for the box    
+     * @param sealableTop boolean value for whether or not the top of the boxes can be sealed      
+     * @return      
+     */
+    @Override
         public double calcCost(int quantity, double baseCost, int colourPrint, boolean reinforcedBottom, boolean reinforcedCorners, boolean sealableTop){
         double cost = super.calcCost(quantity, baseCost, colourPrint, reinforcedBottom, reinforcedCorners, sealableTop);
             return cost / 1000;
