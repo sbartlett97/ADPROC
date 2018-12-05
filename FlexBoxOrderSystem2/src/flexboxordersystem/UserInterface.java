@@ -70,7 +70,9 @@ public class UserInterface extends JFrame
 
     // End of variables declaration   
    
-    //UserInterface constructor  adds components to JFrame
+    /**
+     *User interface constructor class - adds items to JFrame
+     */
     public UserInterface()
     {        
         super("FlexBox Ordering System");
@@ -326,7 +328,11 @@ public class UserInterface extends JFrame
          pack();
     }
     
-    //toggles selected items so that only the most recently selected is active
+    /**
+     * Method for toggling the colour options on the user interface.
+     * Handles an action event from the clicked radio button and performs checks
+     * to make sure there is always a single item selected.
+     */
     private void colourSelected(java.awt.event.ActionEvent e){
         if (e.getSource() == noColourButton){
             if(oneColourButton.isSelected() == false && twoColourButton.isSelected() == false ){
@@ -347,77 +353,124 @@ public class UserInterface extends JFrame
             noColourButton.setSelected(false);
             oneColourButton.setSelected(false);
         } 
+        checkReinforcementOptions();
     }
-    
-    //Determines waht options the suer has based on grade of cardboard
+    private void checkReinforcementOptions(){
+        int currentGrade = Integer.parseInt(cardboardGrades[gradeInp.getSelectedIndex()]);
+        if(currentGrade == 1){
+            cornerReinforcement.setEnabled(false);
+            bottomReinforcement.setEnabled(false);
+        }else if(currentGrade == 2){
+            if(noColourButton.isSelected() || oneColourButton.isSelected()){
+                cornerReinforcement.setEnabled(false);
+                bottomReinforcement.setEnabled(false);
+            }else{
+                bottomReinforcement.setEnabled(true);
+            }
+        }else if(currentGrade == 3){
+            if(noColourButton.isSelected() || oneColourButton.isSelected()){
+                cornerReinforcement.setEnabled(false);
+                bottomReinforcement.setEnabled(false);
+            }else{
+                bottomReinforcement.setEnabled(true);
+                cornerReinforcement.setEnabled(true);
+            }
+        }else if (currentGrade == 4){
+            if(oneColourButton.isSelected()){
+                cornerReinforcement.setEnabled(false);
+                bottomReinforcement.setEnabled(false);
+            }else{
+                bottomReinforcement.setEnabled(true);
+                cornerReinforcement.setEnabled(true);
+            }
+        }else if (currentGrade == 5){
+            bottomReinforcement.setEnabled(true);
+            cornerReinforcement.setEnabled(true);
+        }
+    }
+    /**
+     * Determines what options are available to the user based on what cardboard grade they have selected. 
+     * Handles an action event from the grade combo box and activates/deactivates items 
+     * based on whether or not that grade of cardboard is allowed them. 
+     */
     private void gradeSelected(java.awt.event.ActionEvent e){
         {
         JComboBox cb = (JComboBox)e.getSource();
         int gradeIndex = cb.getSelectedIndex();
         switch (gradeIndex){
             case 0: //grade 1
-                bottomReinforcement.setEnabled(false);
-                cornerReinforcement.setEnabled(false);
                 oneColourButton.setEnabled(false);
                 twoColourButton.setEnabled(false);
                 noColourButton.setSelected(true);
                 break;
             case 1: //grade 2
-                bottomReinforcement.setEnabled(true);
-                cornerReinforcement.setEnabled(false);
                 noColourButton.setEnabled(true);
                 oneColourButton.setEnabled(true);
                 twoColourButton.setEnabled(true);
                 break;
             case 2: //grade 3
-                bottomReinforcement.setEnabled(true);
-                cornerReinforcement.setEnabled(true);
                 oneColourButton.setEnabled(true);
                 twoColourButton.setEnabled(true);
                 noColourButton.setEnabled(true);
                 break;
             case 3: //grade 4
-                bottomReinforcement.setEnabled(true);
-                cornerReinforcement.setEnabled(true);
                 oneColourButton.setEnabled(true);
+                noColourButton.setSelected(false);
+                oneColourButton.setSelected(true);
+                twoColourButton.setSelected(false);
                 twoColourButton.setEnabled(true);
-                noColourButton.setEnabled(true);
+                noColourButton.setEnabled(false);
                 break;
             case 4: //grade 5
-                bottomReinforcement.setEnabled(true);
-                cornerReinforcement.setEnabled(true);
                 oneColourButton.setEnabled(false);
                 twoColourButton.setEnabled(true);
                 twoColourButton.setSelected(true);
                 noColourButton.setEnabled(false);
                 noColourButton.setSelected(false);
+                oneColourButton.setSelected(false);
                 break;
             default:
                 bottomReinforcement.setEnabled(false);
                 cornerReinforcement.setEnabled(false);
                 oneColourButton.setEnabled(false);
                 twoColourButton.setEnabled(false);
-                noColourButton.setSelected(true);        }
+                noColourButton.setSelected(true);        
         }
+        }
+        checkReinforcementOptions();
+
     }
     
-    //method for clearing the text fields
+    /**
+     * Method that clears the text inputs when they are focused.
+     */
     private void clearText(java.awt.event.FocusEvent e){
         JTextField textField = (JTextField)e.getSource(); 
         textField.setText("");
         
     }
-    
+    /**
+     * Method for closing the window when the Exit button is pressed. 
+     */
     private void closeWindow(java.awt.event.ActionEvent e){
         System.exit(0);
     }
     
+    /**
+     * Method for reseting the entire order and clears the text fields.
+     * 
+     */
     private void resetOrder(java.awt.event.ActionEvent e){
         objArr.clear();
         totalCostStringUpdate();
         textFields.forEach((item) -> item.setText("          "));
     }
-    
+    /**
+     * Method for adding items to the order when the Add button is pressed.
+     * Performs all necessary checks on the user inputs to ensure that valid 
+     * inputs and selections have been made, then adds the item to the order and 
+     * updates the total cost etc.
+     */
     private void addToOrder(java.awt.event.ActionEvent event) {                               
         // TODO add your handling code here:
         String[] testValues = {heightInp.getText(), widthInp.getText(), lengthInp.getText(), quantityInp.getText()};
@@ -527,7 +580,7 @@ public class UserInterface extends JFrame
                 
                 int typeTemp = getValidType(gradeTemp, colourTemp, 
                         bottomTemp, cornerTemp);
-                
+                System.out.println(typeTemp);
                 switch (typeTemp)
                 {
                     case 1:
@@ -572,7 +625,14 @@ public class UserInterface extends JFrame
             }
     }                              
     
-    //add methods for doing stuff
+    /**
+     * Method that takes the user inputs and determines the type of box best suited for the order. 
+     * @param cardboardGradeInp grade of the cardboard selected
+     * @param colourPrintInp colour printing option selected
+     * @param reinforcedBottomInp selected value for reinforced bottom
+     * @param reinforcedCornersInp selected value for reinforced corners
+     * @return returns an integer representing the type of box to be used
+     */
     public int getValidType(int cardboardGradeInp, int colourPrintInp, 
                     boolean reinforcedBottomInp, boolean reinforcedCornersInp)
     {
@@ -609,7 +669,11 @@ public class UserInterface extends JFrame
             return 0;
         }
     }
-        
+    /**
+     * Method for making sure the user has entered a valid sizes for the box dimensions
+     * @param sizeInp value of the current size input being checked
+     * @return returns a boolean of whether or not the input is valid
+     */
     public boolean getValidSize(int sizeInp)
     {
         if(sizeInp >= 100 && sizeInp <= 2000)
@@ -622,6 +686,11 @@ public class UserInterface extends JFrame
         }
     }
     
+    /**
+     * Method used for getting the total cost of the current order
+     * @param list array list containing all items in the current order
+     * @return returns the calculated cost of all items in the order
+     */
     public double getTotalCost(ArrayList list)
     {
         double totalCost = 0;
@@ -658,6 +727,9 @@ public class UserInterface extends JFrame
         return totalCost;
     }
     
+    /**
+     * 
+     */
     public void totalCostStringUpdate()
     {
             double test = getTotalCost(objArr);
