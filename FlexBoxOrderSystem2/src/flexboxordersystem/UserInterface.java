@@ -590,7 +590,6 @@ public class UserInterface extends JFrame
                 
                 int typeTemp = getValidType(gradeTemp, colourTemp, 
                         bottomTemp, cornerTemp);
-                System.out.println(typeTemp);
                 switch (typeTemp)
                 {
                     case 1:
