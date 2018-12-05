@@ -34,8 +34,9 @@ public class TypeII extends CardboardBox
     public TypeII(int heightIn, int widthIn, int lengthIn, int quantityIn, 
                         int cardboardGradeIn, int colourPrintIn, 
                         boolean reinforcedBottomIn, boolean reinforcedCornersIn, 
-                        boolean sealableTopIn)
+                        boolean sealableTopIn, double gradeMultiplyerIn)
     {
+        gradeMultiplyer = gradeMultiplyerIn;
         boxHeight = heightIn;
         boxWidth = widthIn;
         boxLength = lengthIn;
@@ -46,7 +47,7 @@ public class TypeII extends CardboardBox
         reinforcedBottom = reinforcedBottomIn;
         reinforcedCorners = reinforcedCornersIn;
         sealableTop = sealableTopIn;
-        baseCost = boxSurfaceArea * 0.00065;
+        baseCost = boxSurfaceArea * gradeMultiplyer;
         cost = calcCost(boxQuantity, baseCost, 
                         colourPrint, reinforcedBottom, reinforcedCorners, 
                         sealableTop);
