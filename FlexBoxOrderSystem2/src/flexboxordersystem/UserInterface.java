@@ -360,10 +360,14 @@ public class UserInterface extends JFrame
         if(currentGrade == 1){
             cornerReinforcement.setEnabled(false);
             bottomReinforcement.setEnabled(false);
+            cornerReinforcement.setSelected(false);
+            bottomReinforcement.setSelected(false);
         }else if(currentGrade == 2){
             if(noColourButton.isSelected() || oneColourButton.isSelected()){
                 cornerReinforcement.setEnabled(false);
                 bottomReinforcement.setEnabled(false);
+                cornerReinforcement.setSelected(false);
+                bottomReinforcement.setSelected(false);
             }else{
                 bottomReinforcement.setEnabled(true);
             }
@@ -371,6 +375,8 @@ public class UserInterface extends JFrame
             if(noColourButton.isSelected() || oneColourButton.isSelected()){
                 cornerReinforcement.setEnabled(false);
                 bottomReinforcement.setEnabled(false);
+                cornerReinforcement.setSelected(false);
+                bottomReinforcement.setSelected(false);
             }else{
                 bottomReinforcement.setEnabled(true);
                 cornerReinforcement.setEnabled(true);
@@ -379,6 +385,8 @@ public class UserInterface extends JFrame
             if(oneColourButton.isSelected()){
                 cornerReinforcement.setEnabled(false);
                 bottomReinforcement.setEnabled(false);
+                cornerReinforcement.setSelected(false);
+                bottomReinforcement.setSelected(false);
             }else{
                 bottomReinforcement.setEnabled(true);
                 cornerReinforcement.setEnabled(true);
@@ -402,6 +410,8 @@ public class UserInterface extends JFrame
                 oneColourButton.setEnabled(false);
                 twoColourButton.setEnabled(false);
                 noColourButton.setSelected(true);
+                oneColourButton.setSelected(false);
+                twoColourButton.setSelected(false);
                 break;
             case 1: //grade 2
                 noColourButton.setEnabled(true);
