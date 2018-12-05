@@ -15,7 +15,7 @@ public abstract class CardboardBox
     protected int boxHeight, boxWidth, boxLength, boxQuantity, boxSurfaceArea, 
                   cardboardGrade, colourPrint;
     protected boolean reinforcedBottom, reinforcedCorners, sealableTop;
-    protected double cost, baseCost;
+    protected double cost, baseCost, gradeMultiplyer;
     
     /**
      *sets the height of the created box
@@ -180,12 +180,9 @@ public abstract class CardboardBox
     
         public double calcCost(int quantity, double baseCost, int colourPrint, boolean reinforcedBottom, boolean reinforcedCorners, boolean sealableTop){
         
-            System.out.println(baseCost);
         double currCost = baseCost;
-            System.out.println(currCost);
 
         currCost *= quantity;
-        System.out.println(currCost);
         switch(colourPrint)
         {
             case 1: currCost *= 1.12;

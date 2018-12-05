@@ -67,6 +67,7 @@ public class UserInterface extends JFrame
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
+    private double[] gradeMultiplyers = {0.00055, 0.00065, 0.0082, 0.00098, 0.0015};
 
     // End of variables declaration   
    
@@ -77,7 +78,6 @@ public class UserInterface extends JFrame
     {        
         super("FlexBox Ordering System");
         setLayout(new FlowLayout());
-        
         buttonGroup1 = new javax.swing.ButtonGroup();
         buttonGroup2 = new javax.swing.ButtonGroup();
         jPanel1 = new javax.swing.JPanel();
@@ -586,35 +586,35 @@ public class UserInterface extends JFrame
                     case 1:
                         TypeI box = new TypeI(heightTemp, widthTemp, lengthTemp, 
                             quantityTemp, gradeTemp, colourTemp, bottomTemp, 
-                            cornerTemp, sealableTemp);
+                            cornerTemp, sealableTemp, gradeMultiplyers[gradeTemp -1]);
                         objArr.add(box);
                         totalCostStringUpdate();
                         break;
                     case 2:
                         TypeII box2 = new TypeII(heightTemp, widthTemp, lengthTemp, 
                             quantityTemp, gradeTemp, colourTemp, bottomTemp, 
-                            cornerTemp, sealableTemp);
+                            cornerTemp, sealableTemp, gradeMultiplyers[gradeTemp -1]);
                         objArr.add(box2);
                         totalCostStringUpdate();
                         break;
                     case 3:
                         TypeIII box3 = new TypeIII(heightTemp, widthTemp, lengthTemp, 
                             quantityTemp, gradeTemp, colourTemp, bottomTemp, 
-                            cornerTemp, sealableTemp);
+                            cornerTemp, sealableTemp, gradeMultiplyers[gradeTemp -1]);
                         objArr.add(box3);
                         totalCostStringUpdate();
                         break;
                     case 4:
                         TypeIV box4 = new TypeIV(heightTemp, widthTemp, lengthTemp, 
                             quantityTemp, gradeTemp, colourTemp, bottomTemp, 
-                            cornerTemp, sealableTemp);
+                            cornerTemp, sealableTemp, gradeMultiplyers[gradeTemp -1]);
                         objArr.add(box4);
                         totalCostStringUpdate();
                         break;
                     case 5:
                         TypeV box5 = new TypeV(heightTemp, widthTemp, lengthTemp, 
                             quantityTemp, gradeTemp, colourTemp, bottomTemp, 
-                            cornerTemp, sealableTemp);
+                            cornerTemp, sealableTemp, gradeMultiplyers[gradeTemp -1]);
                             objArr.add(box5);
                         totalCostStringUpdate();
                         break;
@@ -676,7 +676,7 @@ public class UserInterface extends JFrame
      */
     public boolean getValidSize(int sizeInp)
     {
-        if(sizeInp >= 100 && sizeInp <= 2000)
+        if(sizeInp >= 100 && sizeInp <= 5000)
         {
             return true;
         }
