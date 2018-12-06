@@ -29,14 +29,14 @@ public class TypeIV extends CardboardBox
      * @param reinforcedBottomIn value for the reinforced bottom variable of the box
      * @param sealableTopIn value for whether or not the boxes can be sealed
      * @param reinforcedCornersIn value for the reinforced corners variable for the box
-     * @param gradeMultiplyerIn
+     * @param gradeMultiplierIn value for cost multiplier
      */
     public TypeIV(int heightIn, int widthIn, int lengthIn, int quantityIn, 
                         int cardboardGradeIn, int colourPrintIn, 
                         boolean reinforcedBottomIn, boolean reinforcedCornersIn, 
-                        boolean sealableTopIn, double gradeMultiplyerIn)
+                        boolean sealableTopIn, double gradeMultiplierIn)
     {
-        gradeMultiplyer = gradeMultiplyerIn;
+        gradeMultiplier = gradeMultiplierIn;
         boxHeight = heightIn;
         boxWidth = widthIn;
         boxLength = lengthIn;
@@ -47,7 +47,7 @@ public class TypeIV extends CardboardBox
         reinforcedBottom = reinforcedBottomIn;
         reinforcedCorners = reinforcedCornersIn;
         sealableTop = sealableTopIn;
-        baseCost = boxSurfaceArea * gradeMultiplyer;
+        baseCost = boxSurfaceArea * gradeMultiplier;
         cost = calcCost(boxQuantity, baseCost, 
                         colourPrint, reinforcedBottom, reinforcedCorners, 
                         sealableTop);

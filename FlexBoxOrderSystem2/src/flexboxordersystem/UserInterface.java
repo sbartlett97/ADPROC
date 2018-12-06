@@ -67,7 +67,7 @@ public class UserInterface extends JFrame
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
-    private double[] gradeMultiplyers = {0.00055, 0.00065, 0.0082, 0.00098, 0.0015};
+    private double[] gradeMultipliers = {0.00055, 0.00065, 0.0082, 0.00098, 0.0015};
 
     // End of variables declaration   
    
@@ -169,7 +169,7 @@ public class UserInterface extends JFrame
        
         
         //Focus listeners added to text inputs - clears input when focussed
-        initilaiseItemsForFOucsListeners();
+        initialiseItemsForFocusListeners();
 
         textFields.forEach((item) -> addFocusListener(item));
 
@@ -506,7 +506,7 @@ public class UserInterface extends JFrame
                             errorString = "Enter a valid number into width Input";
                             break;
                         case 2:
-                            errorString = "Enter a valid number into lenght Input";
+                            errorString = "Enter a valid number into length Input";
                             break;
                         case 3:
                             errorString = "Enter a valid number into quantity Input";
@@ -552,7 +552,7 @@ public class UserInterface extends JFrame
                             err = "Enter a valid number between 100 and 5000 into width Input";
                             break;
                         case 2:
-                            err = "Enter a valid number between 100 and 5000 into lenght Input";
+                            err = "Enter a valid number between 100 and 5000 into length Input";
                             break;
                         case 3:
                             err = "Enter a valid number between 100 and 5000 into height Input";
@@ -595,35 +595,35 @@ public class UserInterface extends JFrame
                     case 1:
                         TypeI box = new TypeI(heightTemp, widthTemp, lengthTemp, 
                             quantityTemp, gradeTemp, colourTemp, bottomTemp, 
-                            cornerTemp, sealableTemp, gradeMultiplyers[gradeTemp -1]);
+                            cornerTemp, sealableTemp, gradeMultipliers[gradeTemp -1]);
                         objArr.add(box);
                         totalCostStringUpdate();
                         break;
                     case 2:
                         TypeII box2 = new TypeII(heightTemp, widthTemp, lengthTemp, 
                             quantityTemp, gradeTemp, colourTemp, bottomTemp, 
-                            cornerTemp, sealableTemp, gradeMultiplyers[gradeTemp -1]);
+                            cornerTemp, sealableTemp, gradeMultipliers[gradeTemp -1]);
                         objArr.add(box2);
                         totalCostStringUpdate();
                         break;
                     case 3:
                         TypeIII box3 = new TypeIII(heightTemp, widthTemp, lengthTemp, 
                             quantityTemp, gradeTemp, colourTemp, bottomTemp, 
-                            cornerTemp, sealableTemp, gradeMultiplyers[gradeTemp -1]);
+                            cornerTemp, sealableTemp, gradeMultipliers[gradeTemp -1]);
                         objArr.add(box3);
                         totalCostStringUpdate();
                         break;
                     case 4:
                         TypeIV box4 = new TypeIV(heightTemp, widthTemp, lengthTemp, 
                             quantityTemp, gradeTemp, colourTemp, bottomTemp, 
-                            cornerTemp, sealableTemp, gradeMultiplyers[gradeTemp -1]);
+                            cornerTemp, sealableTemp, gradeMultipliers[gradeTemp -1]);
                         objArr.add(box4);
                         totalCostStringUpdate();
                         break;
                     case 5:
                         TypeV box5 = new TypeV(heightTemp, widthTemp, lengthTemp, 
                             quantityTemp, gradeTemp, colourTemp, bottomTemp, 
-                            cornerTemp, sealableTemp, gradeMultiplyers[gradeTemp -1]);
+                            cornerTemp, sealableTemp, gradeMultipliers[gradeTemp -1]);
                             objArr.add(box5);
                         totalCostStringUpdate();
                         break;
@@ -691,7 +691,7 @@ public class UserInterface extends JFrame
         }
         else
         {
-            return false;
+        return false;
         }
     }
     
@@ -737,36 +737,43 @@ public class UserInterface extends JFrame
     }
     
     /**
-     * 
+     * Updates the string displaying total cost
      */
     public void totalCostStringUpdate()
     {
-            double test = getTotalCost(objArr);
-            if (test == 0.0){
-                currTotalCost.setText("Current total cost: £0.00");
-            }else{
-                currTotalCost.setText("Current total cost: £" + df.format(getTotalCost(objArr)));
-            }
-        
+        double test = getTotalCost(objArr);
+        if (test == 0.0)
+        {
+            currTotalCost.setText("Current total cost: £0.00");
+        }
+        else
+        {
+            currTotalCost.setText("Current total cost: £" + df.format(getTotalCost(objArr)));
+        }
     }
     
-    private void initilaiseItemsForFOucsListeners(){
+    private void initialiseItemsForFocusListeners()
+    {
         textFields.add(quantityInp);
         textFields.add(heightInp);
         textFields.add(widthInp);
         textFields.add(lengthInp);
     }
     
-    private void addFocusListener(JTextField item){
-        item.addFocusListener(new java.awt.event.FocusListener() {
+    private void addFocusListener(JTextField item)
+    {
+        item.addFocusListener(new java.awt.event.FocusListener()
+        {
             @Override
-            public void focusGained(java.awt.event.FocusEvent evt) {
+            public void focusGained(java.awt.event.FocusEvent evt)
+            {
                 clearText(evt);
             }
             @Override
-            public void focusLost(FocusEvent e) {
+            public void focusLost(FocusEvent e)
+            {
+                
             }
         });
     }
-    
 }

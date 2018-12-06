@@ -15,7 +15,7 @@ public abstract class CardboardBox
     protected int boxHeight, boxWidth, boxLength, boxQuantity, boxSurfaceArea, 
                   cardboardGrade, colourPrint;
     protected boolean reinforcedBottom, reinforcedCorners, sealableTop;
-    protected double cost, baseCost, gradeMultiplyer;
+    protected double cost, baseCost, gradeMultiplier;
     
     /**
      *sets the height of the created box
@@ -88,7 +88,7 @@ public abstract class CardboardBox
     }
     
     /**
-     * @retrun Returns the height of the box
+     * @return Returns the height of the box
      */
     public int getBoxHeight()
     {
@@ -116,7 +116,7 @@ public abstract class CardboardBox
         return boxQuantity;
     }
     /**
-     * @rteturn Returns the surfaceArea of the box
+     * @return Returns the surfaceArea of the box
      */
     public int getBoxSurfaceArea()
     {
@@ -178,11 +178,13 @@ public abstract class CardboardBox
                2 * (width * length);
     }
     
-        public double calcCost(int quantity, double baseCost, int colourPrint, boolean reinforcedBottom, boolean reinforcedCorners, boolean sealableTop){
-        
+    public double calcCost(int quantity, double baseCost, int colourPrint, 
+        boolean reinforcedBottom, boolean reinforcedCorners, boolean sealableTop)
+    {
         double currCost = baseCost;
 
         currCost *= quantity;
+        
         switch(colourPrint)
         {
             case 1: currCost *= 1.12;
@@ -190,22 +192,18 @@ public abstract class CardboardBox
             case 2: currCost *= 1.15;
                     break;
         }
-        System.out.println(currCost);
         if(reinforcedBottom == true)
         {
             currCost *= 1.13;
         }
-        System.out.println(currCost);
         if(reinforcedCorners == true)
         {
             currCost *= 1.12;
         }
-        System.out.println(currCost);
         if(sealableTop == true)
         {
             currCost *= 1.1;
         }
-        System.out.println(currCost);
         return currCost;
     }
 }
